@@ -22,4 +22,5 @@
 1. 参看json文件的说明.txt，创建ES Index和Mapping
 2. 执行ES测试，创建数据，测试查询
 3. 执行MQ测试，测试MQ的功能
-	
+### 其他：
+可以参看[这里](https://www.jianshu.com/p/198d4c3fbea5)，对整个ES的开发流程有简单说明
