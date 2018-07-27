@@ -1,0 +1,46 @@
+ES数据说明：
+	创建索引 doc
+	创建Type office
+	创建映射：指明用户的搜索条件以及类型
+		文档主键 docId type:long
+		文件名 docName type:text
+		作者 author type:keyword
+		创建时间 createTime type:date format:yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis
+		文档类型(docx pptx xlsx..) docType type:keyword
+		文档摘要 docSummary type:text
+		文档标签 tag type:text （数组）
+使用方式：	
+	需要提前使用REST AIP创建索引 映射 
+	①发送put 请求到http://192.168.128.135:9200/doc 其中doc为索引名称
+	②参数为json格式的数据 mapping.json
+	
+部分字段解释：
+	"number_of_replicas":0 
+	索引副本个数，因为我们只有一台机器，如果不设置为0，使用head插件查看时，集群健康度将变为黄色
+	
+	"dynamic":false
+	对于office这个Type，field是固定的，不允许动态改变。
+	比如，我Document里多写了一个字段email，如果dynamic设置为true，Mapping会自动增加一个field为email
+	这里设置为false，表示会忽略email，所有的field都是事先确定的
+	详情可参见https://www.elastic.co/guide/en/elasticsearch/reference/5.5/dynamic.html
+	
+	"docName":
+	{
+	  "type":"text",
+	  "analyzer": "ik_smart",
+	  "search_analyzer": "ik_smart"
+	}
+	这里对text类型的field使用了ik分词，这样才能支持中文
+	analyzer表示对Document进行分词
+	search_analyzer表示对搜索条件进行分词
+	
+	type:keyword 适合结构化内容，比如标签，状态，邮件地址，常用于过滤，排序，聚合，只能通过精确值来查找
+	type:text 适合全文本值，比如邮件正文，详细的描述信息等，在索引之前将会被分词，不会参与排序和聚合
+	type:date：①可以自定义 ②可以使用内置的格式 ③可以使用自1970年0时到现在的毫秒数
+	
+	
+	"tags":
+	{
+	  "type":"text"
+	}
+	该字段在java中是List，但映射的时候类型可设置为text

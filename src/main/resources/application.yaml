@@ -1,0 +1,11 @@
+logging:
+  level:
+    com: debug
+    
+spring:
+  rabbitmq:
+    host: 192.168.128.135
+    port: 5672
+    virtual-host: /chenbin
+    username: chenbin
+    password: chenbin

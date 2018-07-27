@@ -1,0 +1,38 @@
+{
+  "settings":{
+    "number_of_replicas":0
+  },
+  "mappings":{
+    "office":{
+      "dynamic":false,
+      "properties":{
+        "docId":{
+          "type":"long"
+        },
+        "docName":{
+          "type":"text",
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
+        },
+        "author":{
+          "type":"keyword"
+        },
+        "createTime":{
+          "type":"date",
+          "format":"yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+        },
+        "docType":{
+          "type":"keyword"
+        },
+        "docSummary":{
+          "type":"text",
+          "analyzer": "ik_smart",
+          "search_analyzer": "ik_smart"
+        },
+        "tags":{
+          "type":"text"
+        }
+      }
+    }
+  }
+}
